@@ -1,0 +1,48 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Arquivos de build
+/build
+/dist
+
+# Arquivos de configuração
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Expo
+.expo/
+.expo-shared/
+
+# Arquivos de build
+/build
+/dist
+/ios/build
+/android/app/build
+
+# Arquivos de configuração
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Python
+*.pyc
+__pycache__/
+
+# Virtual environment
+venv/
+.env
+
+# Arquivos de banco de dados
+*.sqlite3
