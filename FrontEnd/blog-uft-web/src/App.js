@@ -1,10 +1,19 @@
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import BlogList from "./pages/BlogList";
+import BlogPost from "./pages/BlogPost";
 
 function App() {
   return (
-    <div className="bg-sky-500">
-        Teste
-    </div>
+    <BrowserRouter>
+      <Routes>
+
+        <Route path="/" element={<Home/>}/>
+        <Route path="/BlogList" element={<BlogList/>}/>
+        <Route path="/BlogPost" element={<BlogPost/>}/>
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
