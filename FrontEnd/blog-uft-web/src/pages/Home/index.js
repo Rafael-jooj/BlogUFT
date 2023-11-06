@@ -8,7 +8,7 @@ export default function Home(){
     }
 
     return(
-        <div>
+        <div className="min-h-screen px-[20%]">
             <p>Home page</p>
             <button onClick={goToBlogList}>Blogs</button>
         </div>
