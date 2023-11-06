@@ -1,6 +1,6 @@
 export default function BlogPost(){
     return(
-        <div>
+        <div className="min-h-screen px-[20%]">
             BlogPost page
         </div>
     )
