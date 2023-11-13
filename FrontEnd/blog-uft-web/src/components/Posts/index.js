@@ -3,12 +3,12 @@ import {useNavigate} from "react-router-dom"
 export default function Posts(){
     const navigate = useNavigate();
 
-    function goToBlogList(){
-        navigate('/BlogList');
+    function goToBlogPost(){
+        navigate('/BlogPost');
     }
 
     return(
-        <div className="relative group" onClick={goToBlogList}>
+        <div className="relative group" onClick={goToBlogPost}>
             <div className="border rounded-lg p-3 h-96 transition-transform transform group-hover:-translate-y-2 cursor-pointer shadow">
                 <div className="w-full h-48 relative rounded-lg overflow-hidden">
                     <div className="absolute inset-0 bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(img/subcapa.jpg)` }}></div>
