@@ -4,23 +4,45 @@ import BlogList from "./pages/BlogList";
 import BlogPost from "./pages/BlogPost";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <div className="font-body">
-      <Header/>
       <BrowserRouter>
         <Routes>
 
-          <Route path="/" element={<Home/>}/>
-          <Route path="/BlogList" element={<BlogList/>}/>
-          <Route path="/BlogPost" element={<BlogPost/>}/>
+          <Route path="/login" element={<Login />} />
+
+          <Route path="/" element={
+            <>
+              <Header />
+              <Home />
+              <Footer />
+            </>
+          }/>
+
+          <Route path="/BlogList" element={
+            <>
+              <Header />
+              <BlogList />
+              <Footer />
+            </>
+          }/>
+
+          <Route path="/BlogPost" element={
+            <>
+              <Header />
+              <BlogPost />
+              <Footer />
+            </>
+          }/>
 
         </Routes>
       </BrowserRouter>
-      <Footer/>
     </div>
   );
 }
 
 export default App;
+
