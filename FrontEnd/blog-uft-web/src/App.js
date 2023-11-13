@@ -32,7 +32,7 @@ function App() {
             </>
           }/>
 
-          <Route path="/BlogPost" element={
+          <Route path="/BlogPost/:id" element={
             <>
               <Header />
               <BlogPost />
