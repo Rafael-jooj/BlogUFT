@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import CreateBlog from "./pages/CreateBlog";
 
 function App() {
   return (
@@ -36,6 +37,14 @@ function App() {
             <>
               <Header />
               <BlogPost />
+              <Footer />
+            </>
+          }/>
+
+          <Route path="/CreateBlog" element={
+            <>
+              <Header />
+              <CreateBlog />
               <Footer />
             </>
           }/>

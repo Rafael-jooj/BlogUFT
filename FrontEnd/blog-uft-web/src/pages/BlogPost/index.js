@@ -20,7 +20,7 @@ export default function BlogPost(){
     }
 
     return(
-        <div className="min-h-screen px-[20%]">
+        <div className="min-h-screen px-[20%] mt-10">
             <div className="flex flex-col gap-4">
                 <div>
                     <p id="categoria" className="bg-blue-700 w-28 py-1 flex justify-center rounded-lg text-sm text-white font-semibold">Tecnologia</p>
