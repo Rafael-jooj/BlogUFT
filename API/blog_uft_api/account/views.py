@@ -4,10 +4,11 @@ from .serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
-from .models import CustomUser
+from .models import CustomUser, Blog
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework import serializers
+import datetime
 @api_view(['POST'])
 def register_user(request):
     if request.method == 'POST':
@@ -50,3 +51,14 @@ def user_logout(request):
             return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_blog(request):
+    blog = Blog(data=request.data)
+    blog.data_publicacao = datetime.now()
+    if blog.is_valid():
+        blog.save()
+        return Response(blog.data)
+    else:
+        return Response(status=status.HTTP_404_NOT_FOUND)
