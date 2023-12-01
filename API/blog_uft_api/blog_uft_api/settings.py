@@ -13,7 +13,9 @@ SECRET_KEY = 'django-insecure-@gma(ic@#jq0(j8zji_q2fiukrxj$l5yb*re)6z-)!9bgg0(%1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS=['*']
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -29,6 +31,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'account',
     'blogs',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -39,6 +42,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'blog_uft_api.urls'

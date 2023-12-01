@@ -8,10 +8,8 @@ from .models import Blog
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def add_blog(request):
-    print("AAAAAAAAAAAAAAAAAAA",request.data)
     dados = request.data.copy()
     dados.update({'usuario': request.user.id})
-    print("userid",dados)
     blog = BlogCreateSerializer(data=dados)
     
     if blog.is_valid():
