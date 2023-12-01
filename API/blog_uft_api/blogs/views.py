@@ -1,9 +1,9 @@
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import BlogCreateSerializer, BlogSerializer
+from .serializers import BlogCreateSerializer, BlogSerializer, CategoryModelSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .models import Blog
+from .models import Blog, CategoryModel
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -61,3 +61,10 @@ def delete_blog(request, blog_id):
     else:
         blog.delete()
         return Response({"message": "Blog deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_all_categories(request):
+    categories = CategoryModel.objects.all()
+    serializer = CategoryModelSerializer(categories, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

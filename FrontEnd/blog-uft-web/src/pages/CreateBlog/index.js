@@ -1,4 +1,54 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+
 export default function CreateBlog(){
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+    const [categories, setCategories] = useState([]);
+    const [categoria, setSelectedCategory] = useState("");
+    const [titulo, setTitle] = useState("");
+    const [texto, setContent] = useState("");
+    console.log(token)
+    useEffect(() => {
+        // Fetch categories from the API
+        fetch("http://127.0.0.1:8000/api/categories", {
+            method : 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setCategories(data);
+                logCategories(data);
+            })
+            .catch((error) => console.error("Error fetching categories:", error));
+    }, []);
+
+    const handlesubmit = (e) =>{
+        e.preventDefault();
+        let regobj={titulo,texto,categoria};
+        console.log(regobj);
+        fetch("http://127.0.0.1:8000/api/add_blog/", {
+                method: "POST",
+                headers: { 
+                    'content-type': 'application/json' ,
+                    'Authorization': `Token ${token}`,
+                },
+                body: JSON.stringify(regobj)
+            }).then((res) => {
+                console.log('blog criado')
+                navigate("/");
+            }).catch((err) => {
+                console.log('erro', err.message)
+            });
+    }
+
+    const logCategories = (categories) => {
+        console.log("Categories:", categories);
+    };
     return(
         <div className="min-h-screen px-[20%] py-4">
             <div className="bg-white rounded-lg mt-5 mb-10 p-5 shadow-md border">
@@ -6,28 +56,31 @@ export default function CreateBlog(){
                     <h2>Criar Novo Blog</h2>
                 </div>
 
-                <form action="#" className="flex flex-col gap-4">
+                <form action="#" className="flex flex-col gap-4" onSubmit={handlesubmit}>
                     <div className="flex flex-col">
                         <label>Título:</label>
-                        <input id="title" type="text" className="border rounded-lg p-2"/>
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label>Autor:</label>
-                        <input id="autor" type="text" className="border rounded-lg p-2"/>
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label>Data e Hora:</label>    
-                        <div className="flex flex-row gap-10 w-full">
-                            <input type="date" className="border p-2 rounded-lg w-full"/>
-                            <input type="time" className="border p-2 rounded-lg w-full"/>
-                        </div>
+                        <input id="title" type="text" className="border rounded-lg p-2" value={titulo}  onChange={(e) => setTitle(e.target.value)}/>
                     </div>
 
                     <div className="flex flex-col">
                         <label>Conteúdo:</label>
-                        <textarea className="border rounded-lg p-2 h-48"/>
+                        <textarea className="border rounded-lg p-2 h-48" value={texto} onChange={(e) => setContent(e.target.value)}/>
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label>Categoria:</label>
+                        <select
+                            value={categoria}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="border rounded-lg p-2"
+                        >
+                            <option value="">Selecione a Categoria</option>
+                            {categories.map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    {category.nome}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
                     <div>
