@@ -7,8 +7,6 @@ export default function Login(){
     const [password, passwordchange] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const handlesubmit = (e) =>{
-        
-        
         e.preventDefault();
         let regobj={username,password};
         console.log(regobj);
@@ -26,6 +24,7 @@ export default function Login(){
                 // Save the token to local storage
                 console.log(data.token);
                 localStorage.setItem("token", data.token);
+                localStorage.setItem("usuario_nome", username);
                 // Redirect to the home route or any other route
                 navigate("/");
             }).catch((err) => {

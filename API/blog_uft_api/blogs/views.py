@@ -1,18 +1,20 @@
+from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import BlogCreateSerializer, BlogSerializer, CategoryModelSerializer
+from .serializers import BlogCreateSerializer, BlogSerializer, CategoryModelSerializer, CommentCreateSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .models import Blog, CategoryModel
-
+from .models import Blog, CategoryModel, CommentModel
+import json
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def add_blog(request):
     dados = request.data.copy()
     dados.update({'usuario': request.user.id})
+    print(dados)
     blog = BlogCreateSerializer(data=dados)
-    
-    if blog.is_valid():
+    # print(blog)
+    if blog.is_valid(raise_exception=True):
         blog.save()
         return Response(blog.data, status=status.HTTP_201_CREATED)
     else:
@@ -25,7 +27,7 @@ def get_blog(request, blog_id):
         blog = Blog.objects.get(id=blog_id)
     except Blog.DoesNotExist:
         return Response({"error": "Blog not found"}, status=status.HTTP_404_NOT_FOUND)
-
+    print(blog.capa)
     serializer = BlogSerializer(blog)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -68,3 +70,48 @@ def get_all_categories(request):
     categories = CategoryModel.objects.all()
     serializer = CategoryModelSerializer(categories, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_all_blogs(request):
+    blogs = Blog.objects.all()
+    serializer = BlogSerializer(blogs, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_all_blogs_created(request):
+    blogs = Blog.objects.filter(usuario=request.user.id)
+    serializer = BlogSerializer(blogs, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_comment(request,c_id):
+    dados = request.data.copy()
+    dados.update({'usuario': request.user.id,'post':c_id})
+    print(dados)
+    comment = CommentCreateSerializer(data=dados)
+    # print(blog)
+    if comment.is_valid(raise_exception=True):
+        comment.save()
+        return Response(comment.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(comment.errors,status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_all_comment(request,c_id):
+    comment = CommentModel.objects.filter(post=c_id)
+    comentarios = []
+    for comentario in comment:
+        dados_comentarios = {
+            'nome': comentario.usuario.username,
+            'texto': comentario.texto 
+        }
+        comentarios.append(dados_comentarios)
+    print(comentarios)
+    teste = JsonResponse(comentarios,safe=False)
+    print(teste)
+    return teste
