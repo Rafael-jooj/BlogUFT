@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'reac
 
 export default function Login({navigation}){
     const CreateAccount = ()=>{navigation.navigate('Register')};
+    const Entrar = ()=>{navigation.navigate('MainDrawer')};
 
     return(
         <View style={styles.container}>
@@ -11,7 +12,7 @@ export default function Login({navigation}){
                 <Text style={styles.title}>BlogUFT</Text>
                 <TextInput style={styles.campo} placeholder="Email"/>
                 <TextInput style={styles.campo} placeholder="Senha" secureTextEntry={true}/>
-                <TouchableOpacity style={styles.entrar}>
+                <TouchableOpacity style={styles.entrar} onPress={Entrar}>
                     <Text style={{color: '#fff'}}>Entrar</Text>
                 </TouchableOpacity>
             </View>
