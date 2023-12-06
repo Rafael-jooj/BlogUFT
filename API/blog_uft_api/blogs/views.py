@@ -21,7 +21,7 @@ def add_blog(request):
         return Response(blog.errors,status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def get_blog(request, blog_id):
     try:
         blog = Blog.objects.get(id=blog_id)
@@ -65,7 +65,7 @@ def delete_blog(request, blog_id):
         return Response({"message": "Blog deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
     
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def get_all_categories(request):
     categories = CategoryModel.objects.all()
     serializer = CategoryModelSerializer(categories, many=True)
@@ -73,7 +73,7 @@ def get_all_categories(request):
 
     
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def get_all_blogs(request):
     blogs = Blog.objects.all()
     serializer = BlogSerializer(blogs, many=True)
@@ -101,7 +101,7 @@ def add_comment(request,c_id):
         return Response(comment.errors,status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def get_all_comment(request,c_id):
     comment = CommentModel.objects.filter(post=c_id)
     comentarios = []
