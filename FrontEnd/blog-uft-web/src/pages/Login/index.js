@@ -1,37 +1,31 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { login } from "../../api/api";
+import { setToken } from "../../api/tokenManager";
 
 export default function Login(){
     const navigate = useNavigate();
     const [username, namechange] = useState("");
     const [password, passwordchange] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const handlesubmit = (e) =>{
+    
+    const handlesubmit = (e) => {
         e.preventDefault();
-        let regobj={username,password};
-        console.log(regobj);
-        fetch("http://127.0.0.1:8000/api/login/", {
-                method: "POST",
-                headers: { 'content-type': 'application/json'},
-                body: JSON.stringify(regobj)
-            }).then((res) => {
-                if (!res.ok) {
-                    throw new Error("Nome de usuário ou senha inválidos");
-                }
-                return res.json();
-            }).then((data) => {
+        let regobj = { username, password };
+    
+        login(regobj)
+            .then((res) => {
                 console.log('logado');
-                // Save the token to local storage
-                console.log(data.token);
-                localStorage.setItem("token", data.token);
+                setToken(res.data.token);
                 localStorage.setItem("usuario_nome", username);
-                // Redirect to the home route or any other route
                 navigate("/");
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 console.log('erro', err.message);
                 setErrorMessage(err.message);
             });
-    }
+    };
+
     return(
         <div className="flex items-center justify-center h-screen bg-blue-600">
             <div className="p-10 bg-white rounded-lg shadow-lg w-[500px] max-w-md">
