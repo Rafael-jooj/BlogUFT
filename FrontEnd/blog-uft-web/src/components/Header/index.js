@@ -8,11 +8,12 @@ export default function Header(){
             </div>
             <div className="flex flex-row gap-10 text-lg">
                 <a href="/"><li>Home</li></a>
-                <a href="/"><li>Blogs</li></a>
+                <a href="/BlogList"><li>Blogs</li></a>
                 <a href="/CreateBlog"><li>Criar Blog</li></a>
+                <a href="/MeusBlogs"><li>Meus Blogs</li></a>
             </div>
             <div>
-                <input type="text" placeholder="Pesquisar" className="rounded-md p-2 bg-gray-200"/>
+                <p className="text-gray-700 font-semibold">Olá Rafael</p>
             </div>
         </ul>
       </header>

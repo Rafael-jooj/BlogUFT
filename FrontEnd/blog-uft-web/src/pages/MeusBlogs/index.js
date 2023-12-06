@@ -1,40 +1,34 @@
 import { useEffect, useState } from "react";
-import Capa from "../../components/Capa";
-import Posts from "../../components/Posts";
-import { fetchBlogs, fetchCategories } from "../../api/api";
+import MyPosts from "../../components/MyPosts";
+import { fetchMyBlogs, fetchCategories } from "../../api/api";
 
-export default function Home(){
+export default function MeusBlogs(){
 
     const [blogs, setBlogs] = useState([]);
     const [categories, setCategories] = useState([]);
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
-        Promise.all([fetchBlogs(), fetchCategories()])
-            .then(([blogsResponse, categoriesResponse]) => {
-                const reversedBlogs = [...blogsResponse.data].reverse();
-                setBlogs(reversedBlogs);
+        Promise.all([fetchMyBlogs(token), fetchCategories()])
+            .then(([myblogsResponse, categoriesResponse]) => {
+                setBlogs(myblogsResponse.data);
                 setCategories(categoriesResponse.data);
             })
             .catch((error) => {
                 console.error("Erro ao buscar blogs ou categorias:", error);
             });
     }, []);
-    
 
 
     return(
         <div className="min-h-screen px-[20%] my-10">
             <div className="flex flex-col gap-5">
-                <div>
-                    <Capa/>
-                </div>
-
                 <div className="grid grid-cols-3 gap-4">
-                    {blogs.slice(0, 6).map((blog) => {
-                        const categoria = categories.find(cat => cat.id === blog.categoria);
-                        return (
-                            <Posts
-                                key={blog.id}
+                {blogs.map((blog, index) => {
+                    const categoria = categories.find(cat => cat.id === blog.categoria);
+                    return (
+                        <div key={blog.id}>
+                            <MyPosts
                                 id={blog.id}
                                 capa={blog.capa}
                                 titulo={blog.titulo}
@@ -43,8 +37,10 @@ export default function Home(){
                                 conteudo={blog.texto}
                                 categoria={categoria ? categoria.nome : 'Sem Categoria'}
                             />
-                        );
-                    })}
+                            {/* <button onClick={() => handleDelete(blog.id)}>Excluir</button> */}
+                        </div>
+                    );
+                })}
                 </div>
             </div>
         </div>

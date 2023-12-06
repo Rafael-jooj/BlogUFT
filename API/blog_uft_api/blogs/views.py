@@ -1,10 +1,14 @@
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import BlogCreateSerializer, BlogSerializer, CategoryModelSerializer, CommentCreateSerializer
+from .serializers import BlogCreateSerializer, BlogSerializer, CategoryModelSerializer, CommentCreateSerializer, UserSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import Blog, CategoryModel, CommentModel
+# from ..account.models.UserModel import CustomUser
+from account.models.UserModel import CustomUser
+
+
 import json
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -29,6 +33,17 @@ def get_blog(request, blog_id):
         return Response({"error": "Blog not found"}, status=status.HTTP_404_NOT_FOUND)
     print(blog.capa)
     serializer = BlogSerializer(blog)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def get_nome(request, c_id):
+    try:
+        id = CustomUser.objects.get(id=c_id)
+    except Blog.DoesNotExist:
+        return Response({"error": "Usuar not found"}, status=status.HTTP_404_NOT_FOUND)
+    print(id.username)
+    serializer = UserSerializer(id)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['PUT'])

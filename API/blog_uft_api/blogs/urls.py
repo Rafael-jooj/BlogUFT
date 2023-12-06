@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import add_blog, get_blog, update_blog, delete_blog, get_all_categories, get_all_blogs, get_all_blogs_created,add_comment, get_all_comment
+from .views import add_blog, get_blog, update_blog, delete_blog, get_all_categories, get_all_blogs, get_all_blogs_created,add_comment, get_all_comment, get_nome
 
 urlpatterns = [
     path('add_blog/', add_blog, name='add_blog'),
@@ -11,4 +11,5 @@ urlpatterns = [
     path('blogs_created', get_all_blogs_created, name='get_all_blogs_created'),
     path('add_comment/<int:c_id>/', add_comment, name='add_comment'),
     path('get_all_comment/<int:c_id>', get_all_comment, name='get_all_comment'),
+    path('get_user/<int:c_id>', get_nome, name='get_nome'),
 ]

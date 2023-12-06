@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { register } from "../../api/api";
 
 export default function Register(){
     const navigate = useNavigate();
@@ -9,29 +10,31 @@ export default function Register(){
     const [confirmPassword, confirmPasswordChange] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
-    const handlesubmit = (e) =>{
+    function goToLogin(){
+        navigate(`/login`);
+    }
+
+    const handlesubmit = (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             setPasswordError("As senhas não coincidem");
             return;
         }
-        let regobj={username,email,password};
-        console.log(regobj);
-        fetch("http://127.0.0.1:8000/api/register/", {
-                method: "POST",
-                headers: { 'content-type': 'application/json' },
-                body: JSON.stringify(regobj)
-            }).then((res) => {
-                console.log('registrado')
+        let regobj = { username, email, password };
+    
+        register(regobj)
+            .then((res) => {
+                console.log('registrado');
                 navigate("/login");
-            }).catch((err) => {
-                console.log('erro', err.message)
+            })
+            .catch((err) => {
+                console.log('erro', err.message);
             });
-    }
+    };
 
     return(
         <div className="flex items-center justify-center h-screen bg-blue-600">
-            <div className="p-10 bg-white rounded-lg shadow-lg w-[500px] max-w-md">
+            <div className="px-10 py-5 bg-white rounded-lg shadow-lg w-[500px] max-w-md">
                 <div className="flex flex-col gap-4 items-center">
                     <img src="img/logoUFT.png" width={100} alt="logo"/>
                     <h2 className="text-2xl font-bold mb-2 text-gray-800 text-center">BlogUFT</h2>
@@ -58,6 +61,9 @@ export default function Register(){
                     </div>
                     <button type="submit" className="w-full mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Cadastrar</button>
                 </form>
+                <div className="flex justify-center mt-2">
+                    <button onClick={goToLogin} className="underline cursor-pointer text-sky-700">Faça Login</button>
+                </div>
             </div>
         </div>
     )

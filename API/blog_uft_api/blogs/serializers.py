@@ -1,4 +1,6 @@
 from rest_framework import serializers
+# from ..account.models.UserModel import CustomUser
+from account.models.UserModel import CustomUser
 from .models import Blog, CategoryModel,CommentModel
 
 class BlogCreateSerializer(serializers.ModelSerializer):
@@ -15,9 +17,14 @@ class CommentCreateSerializer(serializers.ModelSerializer):
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
-        fields = ('titulo', 'texto','categoria','usuario','capa','data_publicacao','data_alteracao')
+        fields = ('id', 'titulo', 'texto','categoria','usuario','capa','data_publicacao','data_alteracao')
         
 class CategoryModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
         fields = '__all__'
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('username',)

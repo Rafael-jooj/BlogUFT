@@ -8,6 +8,10 @@ export default function Login(){
     const [username, namechange] = useState("");
     const [password, passwordchange] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+
+    function goToRegister(){
+        navigate(`/Register`);
+    }
     
     const handlesubmit = (e) => {
         e.preventDefault();
@@ -46,6 +50,9 @@ export default function Login(){
                         <input value={password} onChange={e=>passwordchange(e.target.value)} type="password" id="password" className="w-full border-2 border-gray-200 p-3 rounded-lg outline-none focus:border-blue-500" placeholder="Digite sua senha"/>
                     </div>
                     <button className="w-full mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Entrar</button>
+                    <div className="flex justify-center">
+                        <button onClick={goToRegister} className="underline cursor-pointer text-sky-700">Criar Conta</button>
+                    </div>
                 </form>
             </div>
         </div>
