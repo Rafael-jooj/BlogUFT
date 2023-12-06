@@ -6,11 +6,7 @@ const Capa = () => {
     <SafeAreaView style={styles.container}>
         <View style={styles.capa}>
             <ImageBackground source={require('../../img/capa.jpg')} style={styles.imagemDeFundo}>
-                <View style={{ alignItems: 'flex-start' }}>
-                    <Text style={styles.categoria}>Tecnologia</Text>
-                </View>
-                <Text style={styles.titulo}>The impact of tecnolog...</Text>
-                <Text style={styles.data}>05 de novembro 2023</Text>
+                <Text style={styles.titulo}>Bem vindo ao BlogUFT!</Text>
             </ImageBackground>
         </View>
     </SafeAreaView>

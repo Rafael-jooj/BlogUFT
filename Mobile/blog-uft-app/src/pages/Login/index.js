@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'reac
 
 export default function Login({navigation}){
     const CreateAccount = ()=>{navigation.navigate('Register')};
-    const Entrar = ()=>{navigation.navigate('MainDrawer')};
+    const Entrar = ()=>{navigation.navigate('Home')};
 
     return(
         <View style={styles.container}>
